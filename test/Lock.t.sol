@@ -2,15 +2,15 @@
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
-import "../src/Lock.sol";
 
+import {Lock} from "../src/Lock.sol";
 
 contract LockTest is Test {
     Lock public lock;
     uint256 unlockTime;
     uint256 unlockAmount;
 
-    event Withdrawal(uint amount, uint when);
+    event Withdrawal(uint256 amount, uint256 when);
 
     receive() external payable {}
 
@@ -22,8 +22,18 @@ contract LockTest is Test {
 
     function testDeployment() public {
         assertEq(lock.unlockTime(), unlockTime);
-        // assertEq(lock.owner(), msg.sender); => lock.owner() is this contract
+        assertEq(lock.owner(), address(this));
         assertEq(address(lock).balance, unlockAmount);
+    }
+
+    function testWithdraw() public {
+        uint256 x = address(this).balance;
+        vm.warp(unlockTime);
+        vm.expectEmit();
+        emit Withdrawal(unlockAmount, block.timestamp);
+        lock.withdraw();
+        uint256 y = address(this).balance;
+        assertEq(y - x, unlockAmount);
     }
 
     function testDeployWithPastUnlock() public {
@@ -41,15 +51,5 @@ contract LockTest is Test {
         vm.prank(address(lock));
         vm.expectRevert("You aren't the owner");
         lock.withdraw();
-    }
-
-    function testWithdrawSuccess() public {
-        uint256 x = address(this).balance;
-        vm.warp(unlockTime);
-        vm.expectEmit();
-        emit Withdrawal(unlockAmount, block.timestamp);
-        lock.withdraw();
-        uint256 y = address(this).balance;
-        assertEq(y - x, unlockAmount);
     }
 }

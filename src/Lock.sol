@@ -5,14 +5,11 @@ import "forge-std/console.sol";
 import "./ILock.sol";
 
 contract Lock is ILock {
-    uint public unlockTime;
+    uint256 public unlockTime;
     address payable public owner;
 
-    constructor(uint _unlockTime) payable {
-        require(
-            block.timestamp < _unlockTime,
-            "Unlock time should be in the future"
-        );
+    constructor(uint256 _unlockTime) payable {
+        require(block.timestamp < _unlockTime, "Unlock time should be in the future");
 
         unlockTime = _unlockTime;
         owner = payable(msg.sender);
