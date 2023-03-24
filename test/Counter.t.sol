@@ -4,7 +4,7 @@ pragma solidity ^0.8.13;
 import "forge-std/Test.sol";
 import "../src/Counter.sol";
 
-contract CounterTest is Test {
+contract CounterTest is Test, Counter {
     Counter public counter;
 
     function setUp() public {
@@ -18,6 +18,8 @@ contract CounterTest is Test {
     }
 
     function testSetNumber(uint256 x) public {
+        vm.expectEmit();
+        emit NumberSet(counter.number(), x);
         counter.setNumber(x);
         assertEq(counter.number(), x);
     }
