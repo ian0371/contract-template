@@ -7,6 +7,7 @@
 - script
   - on-chain simulation: `forge script script/Counter.s.sol --rpc-url local`
   - broadcast: add `--broadcast` flag
+- coverage: `forge coverage`
 
 ## Hardhat
 
@@ -14,3 +15,4 @@
 - test: `npx hardhat test`
 - deploy
   - broadcast: `npx hardhat deploy`
+- coverage: `npx hardhat coverage`
