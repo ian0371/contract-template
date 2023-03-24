@@ -1,6 +1,13 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-forge fmt
-forge test --silent
-npx lint-staged
+files=$(git diff --cached --name-only --diff-filter=ACM -- *.sol)
+if [ ! -z "$files" ]; then
+    forge fmt
+    forge test --silent
+fi
+
+files=$(git diff --cached --name-only --diff-filter=ACM -- *.ts)
+if [ ! -z "$files" ]; then
+    npx lint-staged
+fi
