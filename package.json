@@ -2,9 +2,13 @@
   "devDependencies": {
     "@nomicfoundation/hardhat-foundry": "^1.0.0",
     "hardhat": "^2.13.0",
+    "husky": "^8.0.3",
     "prettier": "^2.8.6"
   },
   "dependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.2"
+  },
+  "scripts": {
+    "prepare": "husky install"
   }
 }
