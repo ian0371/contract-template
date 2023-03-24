@@ -2,11 +2,16 @@
   "devDependencies": {
     "@nomicfoundation/hardhat-foundry": "^1.0.0",
     "hardhat": "^2.13.0",
+    "hardhat-deploy": "^0.11.25",
     "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
     "prettier": "^2.8.6"
   },
   "dependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.2"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   },
   "scripts": {
     "prepare": "husky install"

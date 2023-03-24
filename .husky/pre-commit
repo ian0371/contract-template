@@ -3,3 +3,4 @@
 
 forge fmt
 forge test --silent
+npx lint-staged
