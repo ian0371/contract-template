@@ -12,3 +12,5 @@
 
 - compile: `npx hardhat compile`
 - test: `npx hardhat test`
+- deploy
+  - broadcast: `npx hardhat deploy`
