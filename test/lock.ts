@@ -3,7 +3,7 @@ import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-describe("Counter", function () {
+describe("Counter", function() {
   // We define a fixture to reuse the same setup in every test.
   // We use loadFixture to run this setup once, snapshot that state,
   // and reset Hardhat Network to that snapshot in every test.
@@ -23,20 +23,20 @@ describe("Counter", function () {
     return { lock, unlockTime, lockedAmount, owner, otherAccount };
   }
 
-  describe("Deployment", function () {
-    it("Should set the right unlockTime", async function () {
+  describe("Deployment", function() {
+    it("Should set the right unlockTime", async function() {
       const { lock, unlockTime } = await loadFixture(deployOneYearLockFixture);
 
       expect(await lock.unlockTime()).to.equal(unlockTime);
     });
 
-    it("Should set the right owner", async function () {
+    it("Should set the right owner", async function() {
       const { lock, owner } = await loadFixture(deployOneYearLockFixture);
 
       expect(await lock.owner()).to.equal(owner.address);
     });
 
-    it("Should receive and store the funds to lock", async function () {
+    it("Should receive and store the funds to lock", async function() {
       const { lock, lockedAmount } = await loadFixture(
         deployOneYearLockFixture
       );
@@ -46,7 +46,7 @@ describe("Counter", function () {
       );
     });
 
-    it("Should fail if the unlockTime is not in the future", async function () {
+    it("Should fail if the unlockTime is not in the future", async function() {
       // We don't use the fixture here because we want a different deployment
       const latestTime = await time.latest();
       const Lock = await ethers.getContractFactory("Lock");
@@ -56,9 +56,9 @@ describe("Counter", function () {
     });
   });
 
-  describe("Withdrawals", function () {
-    describe("Validations", function () {
-      it("Should revert with the right error if called too soon", async function () {
+  describe("Withdrawals", function() {
+    describe("Validations", function() {
+      it("Should revert with the right error if called too soon", async function() {
         const { lock } = await loadFixture(deployOneYearLockFixture);
 
         await expect(lock.withdraw()).to.be.revertedWith(
@@ -66,7 +66,7 @@ describe("Counter", function () {
         );
       });
 
-      it("Should revert with the right error if called from another account", async function () {
+      it("Should revert with the right error if called from another account", async function() {
         const { lock, unlockTime, otherAccount } = await loadFixture(
           deployOneYearLockFixture
         );
@@ -80,7 +80,7 @@ describe("Counter", function () {
         );
       });
 
-      it("Shouldn't fail if the unlockTime has arrived and the owner calls it", async function () {
+      it("Shouldn't fail if the unlockTime has arrived and the owner calls it", async function() {
         const { lock, unlockTime } = await loadFixture(
           deployOneYearLockFixture
         );
@@ -92,8 +92,8 @@ describe("Counter", function () {
       });
     });
 
-    describe("Events", function () {
-      it("Should emit an event on withdrawals", async function () {
+    describe("Events", function() {
+      it("Should emit an event on withdrawals", async function() {
         const { lock, unlockTime, lockedAmount } = await loadFixture(
           deployOneYearLockFixture
         );
@@ -106,8 +106,8 @@ describe("Counter", function () {
       });
     });
 
-    describe("Transfers", function () {
-      it("Should transfer the funds to the owner", async function () {
+    describe("Transfers", function() {
+      it("Should transfer the funds to the owner", async function() {
         const { lock, unlockTime, lockedAmount, owner } = await loadFixture(
           deployOneYearLockFixture
         );
