@@ -7,7 +7,7 @@ if [ ! -z "$files" ]; then
     forge test --silent
 fi
 
-files=$(git diff --cached --name-only --diff-filter=ACM -- *.ts)
+files=$(git diff --cached --name-only --diff-filter=ACM -- *.ts *.md)
 if [ ! -z "$files" ]; then
     npx lint-staged
 fi
