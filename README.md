@@ -12,6 +12,15 @@ This template ships the following tools:
   - forge fmt (for `*.sol`)
 - solidity framework: foundry-rs, hardhat
 
+## Prerequisites
+
+```bash
+npm install
+
+# install foundry
+curl -L https://foundry.paradigm.xyz | bash # https://getfoundry.sh/
+```
+
 ## Git hooks
 
 run linters if relevant files changed
@@ -20,14 +29,11 @@ run linters if relevant files changed
 
 `.prettier.json`
 
-## Solidity frameworks
+## Guide for development
 
-This template ships both foundry-rs and hardhat. They can be installed as follows:
+### Development
 
-- foundry: Follow instructions in https://getfoundry.sh/
-- hardhat: Run `npm install`
-
-### Compile
+#### Compile
 
 All contracts in `src/` directory are compiled.
 
@@ -37,7 +43,7 @@ forge build
 npx hardhat compile
 ```
 
-### Unit test
+#### Unit test
 
 Files in `test/` directory are run.
 
@@ -47,7 +53,7 @@ forge test
 npx hardhat test
 ```
 
-### Coverage test
+#### Coverage test
 
 Coverage test is to figure out the coverage of the unit test.
 
@@ -57,7 +63,7 @@ forge coverage
 npx hardhat coverage
 ```
 
-### Test on local network
+#### Test on local network
 
 There are two types of local network:
 
@@ -76,7 +82,7 @@ npx hardhat node
 
 To spawn a local network with klaytn node: TBU
 
-#### deploy
+##### deploy
 
 `hardhat-deploy` is a great tool for managing deployments. Note that it will use the output compiled with hardhat.
 
@@ -102,7 +108,7 @@ Then run:
 npx hardhat deploy --network local --tags Counter
 ```
 
-#### script
+##### script
 
 Both foundry and hardhat provides scripting feature. Foundry supports [local/on-chain simulation modes](https://book.getfoundry.sh/tutorials/solidity-scripting#high-level-overview).
 Note that `local` does not mean local network by `anvil` or `npx hardhat node`, but a local EVM simulation.
@@ -121,31 +127,10 @@ To run the on-chain simulation:
 forge script script/Counter.s.sol --rpc-url baobab
 ```
 
-#### Test on Baobab
-
-If all succeeds, you are ready to deploy contracts and send transactions to Baobab:
-
-To deploy:
-
-```bash
-export PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
-hh deploy --network baobab --tags Counter
-```
-
-To send transactions:
-
-```bash
-export COUNTER=$(cat deployments/baobab/Counter.json | jq -r .address)
-forge script script/Counter.s.sol --rpc-url baobab --private-key $PRIVATE_KEY --broadcast
-# or
-hh run script/counter.ts --network baobab
-```
+If all succeeds, you are ready to deploy contracts and send transactions to Baobab.
+See operation guide for deployment on Baobab.
 
 #### interact
-
-## Guide for development
-
-### Development
 
 provide hardhat-utils
 
@@ -153,8 +138,45 @@ provide hardhat-utils
 
 ### Deployment
 
-based on purpose (baobab-qa, ...)
-hardhat-deploy
+You need to create a network label for each deployment purpose.
+For example, if we need one for QA on Baobab, append to networks in `hardhat.config.ts`:
+
+```typescript
+const config: HardhatUserConfig = {
+  // ...
+  networks: {
+    baobab: {
+      /* ... */
+    },
+    cypress: {
+      /* ... */
+    },
+    "baobab-qa": {
+      url: process.env.BAOBAB_URL || "https://archive-en.baobab.klaytn.net",
+      accounts: [process.env.PRIVATE_KEY as string],
+      live: false,
+      saveDeployments: true,
+    },
+  },
+  // ...
+};
+```
+
+To deploy:
+
+```bash
+export PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+hh deploy --network baobab-qa --tags Counter
+```
+
+To send transactions:
+
+```bash
+export COUNTER=$(cat deployments/baobab-qa/Counter.json | jq -r .address)
+forge script script/Counter.s.sol --rpc-url baobab-qa --private-key $PRIVATE_KEY --broadcast
+# or
+hh run script/counter.ts --network baobab-qa
+```
 
 ### Verification
 
