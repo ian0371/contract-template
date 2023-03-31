@@ -1,6 +1,7 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "hardhat-deploy";
 import "@nomicfoundation/hardhat-toolbox";
+import "@blukat29/hardhat-utils";
 import * as dotenv from "dotenv";
 
 // the first key of test-junk

@@ -9,6 +9,7 @@
     "typescript": "^5.0.3"
   },
   "dependencies": {
+    "@blukat29/hardhat-utils": "github:blukat29/hardhat-utils",
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",
     "dotenv": "^16.0.3"
   },
