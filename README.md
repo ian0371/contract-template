@@ -31,9 +31,7 @@ run linters if relevant files changed
 
 ## Guide for development
 
-### Development
-
-#### Compile
+### Compile
 
 All contracts in `src/` directory are compiled.
 
@@ -43,7 +41,7 @@ forge build
 npx hardhat compile
 ```
 
-#### Unit test
+### Unit test
 
 Files in `test/` directory are run.
 
@@ -53,7 +51,7 @@ forge test
 npx hardhat test
 ```
 
-#### Coverage test
+### Coverage test
 
 Coverage test is to figure out the coverage of the unit test.
 
@@ -63,7 +61,7 @@ forge coverage
 npx hardhat coverage
 ```
 
-#### Test on local network
+### Test on local network
 
 There are two types of local network:
 
@@ -82,7 +80,7 @@ npx hardhat node
 
 To spawn a local network with klaytn node: TBU
 
-##### deploy
+#### deploy
 
 `hardhat-deploy` is a great tool for managing deployments. Note that it will use the output compiled with hardhat.
 
@@ -108,7 +106,7 @@ Then run:
 npx hardhat deploy --network local --tags Counter
 ```
 
-##### script
+#### script
 
 Both foundry and hardhat provides scripting feature. Foundry supports [local/on-chain simulation modes](https://book.getfoundry.sh/tutorials/solidity-scripting#high-level-overview).
 Note that `local` does not mean local network by `anvil` or `npx hardhat node`, but a local EVM simulation.
