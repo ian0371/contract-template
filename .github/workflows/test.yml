@@ -34,14 +34,6 @@ jobs:
 
           restore-keys: npm-v2-
 
-      - uses: actions/cache@v3
-        id: cache
-        with:
-          path: "**/node_modules"
-          key: npm-v2-${{ hashFiles('**/package-lock.json') }}
-
-          restore-keys: npm-v2-
-
       - run: npm ci
         if: steps.cache.outputs.cache-hit != 'true'
 
@@ -59,14 +51,26 @@ jobs:
         with:
           submodules: recursive
 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "npm"
+
+      - uses: actions/cache@v3
+        id: cache
+        with:
+          path: "**/node_modules"
+          key: npm-v2-${{ hashFiles('**/package-lock.json') }}
+
+          restore-keys: npm-v2-
+
+      - run: npm ci
+        if: steps.cache.outputs.cache-hit != 'true'
+
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
         with:
           version: nightly
-
-      - name: Install hardhat library
-        run: npm install --save-dev hardhat
-        if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Run Forge build
         run: |
