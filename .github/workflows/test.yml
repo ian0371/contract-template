@@ -59,6 +59,11 @@ jobs:
           node-version: 18
           cache: "npm"
 
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
       - uses: actions/cache@v3
         id: cache
         with:
