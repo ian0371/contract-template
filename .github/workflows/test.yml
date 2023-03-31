@@ -10,11 +10,41 @@ env:
   FOUNDRY_PROFILE: ci
 
 jobs:
+  check-linter:
+    strategy:
+      fail-fast: true
+
+    name: Linter check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "npm"
+
+      - uses: actions/cache@v3
+        id: cache
+        with:
+          path: "**/node_modules"
+          key: npm-v2-${{ hashFiles('**/package-lock.json') }}
+
+          restore-keys: npm-v2-
+
+      - run: npm ci
+        if: steps.cache.outputs.cache-hit != 'true'
+
+      - name: Run Hardhat tests
+        run: npm run lint
+
   check-foundry:
     strategy:
       fail-fast: true
 
-    name: Foundry project
+    name: Foundry check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -25,9 +55,6 @@ jobs:
         uses: foundry-rs/foundry-toolchain@v1
         with:
           version: nightly
-
-      - run: npm ci
-        if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Run Forge build
         run: |
@@ -42,19 +69,14 @@ jobs:
 
       - name: Run Forge coverage tests
         run: |
-          forge test -vvv
+          forge coverage
         id: coverage
-
-      - name: Run Forge format check
-        run: |
-          forge fmt --check
-        id: fmt
 
   check-hardhat:
     strategy:
       fail-fast: true
 
-    name: Hardhat project
+    name: Hardhat check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -65,11 +87,6 @@ jobs:
         with:
           node-version: 18
           cache: "npm"
-
-      - name: Install Foundry
-        uses: foundry-rs/foundry-toolchain@v1
-        with:
-          version: nightly
 
       - uses: actions/cache@v3
         id: cache
@@ -89,7 +106,7 @@ jobs:
         id: test
 
       - name: Run Hardhat coverage tests
-        run: echo "::set-output name=output::$(npx hardhat coverage)\n"
+        run: echo "output=$(npx hardhat coverage)\n" >> $GITHUB_OUTPUT
         id: coverage
 
       - name: Upload coverage reports to Codecov
