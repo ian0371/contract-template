@@ -29,7 +29,7 @@ This template ships both foundry-rs and hardhat. They can be installed as follow
 
 ### Compile
 
-All contracts in `src` directory are compiled.
+All contracts in `src/` directory are compiled.
 
 ```bash
 forge build
@@ -39,7 +39,7 @@ npx hardhat compile
 
 ### Unit test
 
-Files in `test` are run.
+Files in `test/` directory are run.
 
 ```bash
 forge test
@@ -125,10 +125,16 @@ forge script script/Counter.s.sol --rpc-url baobab
 
 If all succeeds, you are ready to deploy contracts and send transactions to Baobab:
 
+To deploy:
+
 ```bash
 export PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
 hh deploy --network baobab --tags Counter
+```
 
+To send transactions:
+
+```bash
 export COUNTER=$(cat deployments/baobab/Counter.json | jq -r .address)
 forge script script/Counter.s.sol --rpc-url baobab --private-key $PRIVATE_KEY --broadcast
 # or
