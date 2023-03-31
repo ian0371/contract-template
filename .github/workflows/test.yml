@@ -56,6 +56,10 @@ jobs:
         with:
           version: nightly
 
+      - name: Install hardhat library
+        run: npm ci
+        if: steps.cache.outputs.cache-hit != 'true'
+
       - name: Run Forge build
         run: |
           forge --version
@@ -106,7 +110,7 @@ jobs:
         id: test
 
       - name: Run Hardhat coverage tests
-        run: echo "output=$(npx hardhat coverage)\n" >> $GITHUB_OUTPUT
+        run: echo "{output}={$(npx hardhat coverage)}\n" >> $GITHUB_OUTPUT
         id: coverage
 
       - name: Upload coverage reports to Codecov
