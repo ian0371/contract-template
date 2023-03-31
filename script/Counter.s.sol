@@ -5,11 +5,26 @@ import "forge-std/Script.sol";
 import "src/Counter.sol";
 
 contract CounterScript is Script {
-    function setUp() public {}
+    Counter c;
+
+    function setUp() public {
+        console.log("chainid:", block.chainid);
+        console.log("msg.sender:", msg.sender);
+        if (block.chainid == 31337) {
+            // local network
+            c = new Counter();
+        } else {
+            c = Counter(vm.envAddress("COUNTER"));
+        }
+        console.log("Using contract at", address(c));
+    }
 
     function run() public {
+        console.log("number before increment:", c.number());
+
         vm.broadcast();
-        Counter c = new Counter();
-        console.log(address(c));
+        c.increment();
+
+        console.log("number after increment:", c.number());
     }
 }

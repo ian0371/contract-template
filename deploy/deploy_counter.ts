@@ -7,13 +7,6 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  await deploy("Lock", {
-    from: deployer,
-    gasLimit: 4000000,
-    args: [9999999999],
-    log: true,
-  });
-
   await deploy("Counter", {
     from: deployer,
     gasLimit: 4000000,
@@ -22,4 +15,6 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   });
 };
 
+func.tags = ["Counter"];
+// func.dependencies = ["Lock"]; // this ensures Lock is deployed before Counter
 export default func;
