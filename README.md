@@ -8,8 +8,9 @@ This template ships the following tools:
 
 - git hooks: husky
 - linter
+  - eslint (for `*.js`)
   - prettier (for `*.markdown`, `*.ts`)
-  - forge fmt (for `*.sol`)
+  - solhint (for `*.sol`)
 - solidity framework: foundry-rs, hardhat
 
 ## Prerequisites
@@ -179,6 +180,8 @@ hh run script/counter.ts --network baobab-qa
 ```
 
 ### Verification
+
+Upload the following file to scope / finder:
 
 ```bash
 hh smart-flatten contracts/Counter.sol

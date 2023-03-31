@@ -5,8 +5,7 @@ import "@blukat29/hardhat-utils";
 import * as dotenv from "dotenv";
 
 // the first key of test-junk
-const defaultKey =
-  "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
+const defaultKey = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
 
 const config: HardhatUserConfig = {
   solidity: "0.8.18",
