@@ -34,6 +34,14 @@ jobs:
 
           restore-keys: npm-v2-
 
+      - uses: actions/cache@v3
+        id: cache
+        with:
+          path: "**/node_modules"
+          key: npm-v2-${{ hashFiles('**/package-lock.json') }}
+
+          restore-keys: npm-v2-
+
       - run: npm ci
         if: steps.cache.outputs.cache-hit != 'true'
 
@@ -57,7 +65,7 @@ jobs:
           version: nightly
 
       - name: Install hardhat library
-        run: npm ci
+        run: npm install --save-dev hardhat
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Run Forge build
@@ -110,7 +118,7 @@ jobs:
         id: test
 
       - name: Run Hardhat coverage tests
-        run: echo "{output}={$(npx hardhat coverage)}\n" >> $GITHUB_OUTPUT
+        run: npx hardhat coverage
         id: coverage
 
       - name: Upload coverage reports to Codecov
