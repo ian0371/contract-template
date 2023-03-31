@@ -37,6 +37,7 @@ const config: HardhatUserConfig = {
       default: 0, // here this will by default take the first account as deployer
     },
   },
+  etherscan: { apiKey: "DUMMY" },
   paths: {
     deployments: "deployments",
   },

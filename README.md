@@ -33,7 +33,7 @@ run linters if relevant files changed
 
 ### Compile
 
-All contracts in `src/` directory are compiled.
+All contracts in `contracts/` directory are compiled.
 
 ```bash
 forge build
@@ -106,6 +106,12 @@ Then run:
 npx hardhat deploy --network local --tags Counter
 ```
 
+[hardhat-utils](https://github.com/blukat29/hardhat-utils) plugin imports symbols from hardhat artifacts for `call` and `send` commands. Check the number variable with:
+
+```bash
+npx hardhat call Counter number --network local
+```
+
 #### script
 
 Both foundry and hardhat provides scripting feature. Foundry supports [local/on-chain simulation modes](https://book.getfoundry.sh/tutorials/solidity-scripting#high-level-overview).
@@ -127,10 +133,6 @@ forge script script/Counter.s.sol --rpc-url baobab
 
 If all succeeds, you are ready to deploy contracts and send transactions to Baobab.
 See operation guide for deployment on Baobab.
-
-#### interact
-
-provide hardhat-utils
 
 ## Guide for operation
 
@@ -178,5 +180,7 @@ hh run script/counter.ts --network baobab-qa
 
 ### Verification
 
-sourcify
-use hardhat-utils
+```bash
+hh smart-flatten contracts/Counter.sol
+cat artifacts/Counter.flat.sol | pbcopy
+```
