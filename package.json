@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@blukat29/hardhat-utils": "^0.0.4",
+    "@blukat29/hardhat-utils": "^0.0.5",
     "@primitivefi/hardhat-dodoc": "^0.2.3",
     "eslint": "^8.37.0",
     "eslint-config-prettier": "^8.8.0",
