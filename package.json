@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@blukat29/hardhat-utils": "^0.0.4",
     "eslint": "^8.37.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-node": "^11.1.0",
@@ -14,7 +15,6 @@
     "typescript": "^5.0.3"
   },
   "dependencies": {
-    "@blukat29/hardhat-utils": "github:blukat29/hardhat-utils",
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",
     "dotenv": "^16.0.3"
   },
