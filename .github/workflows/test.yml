@@ -1,17 +1,14 @@
 name: Test
 
 on:
-  workflow_dispatch:
   pull_request:
     branches: [main]
     types: [opened, reopened, synchronize]
-
-env:
-  FOUNDRY_PROFILE: ci
+  workflow_dispatch:
 
 jobs:
   check-linter:
-    name: Linter
+    name: Check linter
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -19,93 +16,54 @@ jobs:
           submodules: recursive
       - name: Setup
         uses: ./.github/workflows/setup
-      - name: Lint
+
+      - name: Run linter
         run: npm run lint
 
-#  check-foundry:
-#    strategy:
-#      fail-fast: true
-#
-#    name: Foundry check
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v3
-#        with:
-#          submodules: recursive
-#
-#      - uses: actions/setup-node@v3
-#        with:
-#          node-version: 18
-#          cache: "npm"
-#
-#      - uses: actions/cache@v3
-#        id: cache
-#        with:
-#          path: "**/node_modules"
-#          key: npm-v2-${{ hashFiles('**/package-lock.json') }}
-#
-#          restore-keys: npm-v2-
-#
-#      - run: npm ci
-#        if: steps.cache.outputs.cache-hit != 'true'
-#
-#      - name: Install Foundry
-#        uses: foundry-rs/foundry-toolchain@v1
-#        with:
-#          version: nightly
-#
-#      - name: Run Forge build
-#        run: |
-#          forge --version
-#          forge build --sizes
-#        id: build
-#
-#      - name: Run Forge tests
-#        run: |
-#          forge test -vvv
-#        id: test
-#
-#      - name: Run Forge coverage tests
-#        run: |
-#          forge coverage
-#        id: coverage
-#
-#  check-hardhat:
-#    strategy:
-#      fail-fast: true
-#
-#    name: Hardhat check
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v3
-#        with:
-#          submodules: recursive
-#
-#      - uses: actions/setup-node@v3
-#        with:
-#          node-version: 18
-#          cache: "npm"
-#
-#      - uses: actions/cache@v3
-#        id: cache
-#        with:
-#          path: "**/node_modules"
-#          key: npm-v2-${{ hashFiles('**/package-lock.json') }}
-#
-#          restore-keys: npm-v2-
-#
-#      - run: npm ci
-#        if: steps.cache.outputs.cache-hit != 'true'
-#
-#      - name: Run Hardhat tests
-#        run: npx hardhat test
-#        env:
-#          REPORT_GAS: 1
-#        id: test
-#
-#      - name: Run Hardhat coverage tests
-#        run: npx hardhat coverage
-#        id: coverage
-#
-#      - name: Upload coverage reports to Codecov
-#        uses: codecov/codecov-action@v3
+  check-foundry:
+    name: Check foundry
+    runs-on: ubuntu-latest
+    env:
+      FOUNDRY_PROFILE: ci
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Setup
+        uses: ./.github/workflows/setup
+
+      - name: Run forge build
+        run: |
+          forge --version
+          forge build --sizes
+
+      - name: Run forge tests
+        run: |
+          forge test -vvv
+
+      - name: Run forge coverage tests
+        run: |
+          forge coverage
+
+  check-hardhat:
+    name: Check hardhat
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Setup
+        uses: ./.github/workflows/setup
+
+      - name: Run hardhat test
+        env:
+          REPORT_GAS: 1
+        run: |
+          npx hardhat test
+
+      - name: Run hardhat coverage
+        run: |
+          npx hardhat coverage
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
