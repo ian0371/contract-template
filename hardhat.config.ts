@@ -41,6 +41,11 @@ const config: HardhatUserConfig = {
   paths: {
     deployments: "deployments",
   },
+  dodoc: {
+    exclude: ["hardhat/", "lib/"],
+    runOnCompile: false,
+    freshOutput: false,
+  },
 };
 
 export default config;
