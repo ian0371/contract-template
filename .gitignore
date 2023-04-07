@@ -23,9 +23,8 @@ typechain
 typechain-types
 
 # Development deployments
-deployments/local/
 deployments/localhost/
-deployments/hardaht/
+deployments/hardhat/
 
 ### Node.js
 node_modules/

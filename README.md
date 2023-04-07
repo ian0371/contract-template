@@ -62,16 +62,16 @@ forge coverage
 npx hardhat coverage
 ```
 
-### Test on local network
+### Test on localhost network
 
-There are two types of local network:
+There are two types of localhost network:
 
 - ethereum node (anvil from foundry, hardhat-node from hardhat, or ganache from truffle)
 - klaytn node (klaytn-deploy or homi).
 
 These networks are defined in `foundry.toml` and `hardhat.config.ts`.
 
-To spawn a local network with ethereum node:
+To spawn a localhost network with ethereum node:
 
 ```bash
 anvil
@@ -79,16 +79,16 @@ anvil
 npx hardhat node
 ```
 
-To spawn a local network with klaytn node: TBU
+To spawn a localhost network with klaytn node: TBU
 
 #### deploy
 
 `hardhat-deploy` is a great tool for managing deployments. Note that it will use the output compiled with hardhat.
 
-To run deploy scripts on the local network:
+To run deploy scripts on the localhost network:
 
 ```bash
-npx hardhat deploy --network local
+npx hardhat deploy --network localhost
 ```
 
 It runs scripts in `deploy/` directory and saves the result on `deployments/` directory.
@@ -104,19 +104,19 @@ func.tags = ["Counter"];
 Then run:
 
 ```bash
-npx hardhat deploy --network local --tags Counter
+npx hardhat deploy --network localhost --tags Counter
 ```
 
 [hardhat-utils](https://github.com/blukat29/hardhat-utils) plugin imports symbols from hardhat artifacts for `call` and `send` commands. Check the number variable with:
 
 ```bash
-npx hardhat call Counter number --network local
+npx hardhat call Counter number --network localhost
 ```
 
 #### script
 
 Both foundry and hardhat provides scripting feature. Foundry supports [local/on-chain simulation modes](https://book.getfoundry.sh/tutorials/solidity-scripting#high-level-overview).
-Note that `local` does not mean local network by `anvil` or `npx hardhat node`, but a local EVM simulation.
+Note that `local` does not mean the localhost network by `anvil` or `npx hardhat node`, but a local EVM simulation.
 
 To run the local simulation:
 
