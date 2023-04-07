@@ -25,7 +25,7 @@ const config: HardhatUserConfig = {
       live: true,
       saveDeployments: true,
     },
-    local: {
+    localhost: {
       url: "http://127.0.0.1:8545",
       accounts: [process.env.PRIVATE_KEY || defaultKey],
       live: false,
