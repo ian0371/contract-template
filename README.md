@@ -135,6 +135,16 @@ forge script script/Counter.s.sol --rpc-url baobab
 If all succeeds, you are ready to deploy contracts and send transactions to Baobab.
 See operation guide for deployment on Baobab.
 
+#### library functions
+
+Library contains reusable functions which are published on NPM reside in `lib/hardhat`.
+It enables importing functions like below:
+
+```js
+// file: script/counter_setnums.ts
+import { setNumbers } from "@klaytn/contract-template";
+```
+
 ## Guide for operation
 
 ### Deployment
@@ -186,4 +196,14 @@ Upload the following file to scope / finder:
 ```bash
 hh smart-flatten contracts/Counter.sol
 cat artifacts/Counter.flat.sol | pbcopy
+```
+
+### Publish
+
+It is recommended to publish hardhat tasks and forge scripts to NPM registry.
+
+```bash
+npm init
+npm login
+npm publish
 ```

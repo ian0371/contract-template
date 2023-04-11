@@ -1,5 +1,5 @@
 import { deployments, ethers } from "hardhat";
-import { setNumbers } from "../lib/hardhat";
+import { setNumbers } from "@klaytn/contract-template";
 
 async function main() {
   const Counter = await deployments.get("Counter");
